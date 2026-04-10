@@ -54,17 +54,21 @@ EXPOSE 5000
 
 4. docker 커스텀 이미지
 
-dave1392857@c3r3s7 practice % docker images dockerfile
+```bash
+$ docker images d
 REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
 dockerfile   1.0       a5bd26bb382c   55 seconds ago   142MB
-
+```
 
  ## 5) docker 포트 매핑 실행 로그
 
  1. container 설치
- dave1392857@c3r3s7 practice % docker ps -a 
+```bash
+$ docker ps -a 
 CONTAINER ID   IMAGE            COMMAND           CREATED         STATUS         PORTS                                         NAMES
 57baae126614   dockerfile:1.0   "python app.py"   6 seconds ago   Up 5 seconds   0.0.0.0:8000->5000/tcp, [::]:8000->5000/tcp   container
+```
+
 
 dave1392857@c3r3s7 practice % curl http://localhost:8000
 Hello,  World!%                                                                                                                                    
@@ -120,3 +124,5 @@ a.txt
 root@2d166de71daf:/app# cat a.txt
 hi
 
+
+![github 연동](./docs/github.png)
