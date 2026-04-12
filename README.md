@@ -599,6 +599,22 @@ $curl http://localhost:8081
 Hello, World!%         
 ```
 
+----
+- 호스트 포트가 이미 사용 중이라 실패한다면?
+1) 어떤 포트가 문제인지 확인
+```text
+Bind for 5000:8080 failed: port is already allocated
+- 호스트 5000을 쓰고 있어서 docker 8080을 연결 X
+```
+2) 포트 사용하는 주체 확인
+```text
+lsof i
+docker ps
+- 해당 호스트 점유하고 있는 도커 및 프로그램 확인 
+```
+3) 컨테이너 점유 중일시 삭제 
+4) 일반 프로그램이 점유 시 강제 종료 or 호스트 포트 변경
+
 
 
 
