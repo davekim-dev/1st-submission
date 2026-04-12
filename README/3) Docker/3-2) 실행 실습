@@ -1,0 +1,100 @@
+## 7) 컨테이너 실행 실습
+
+1. 컨테이너 실행 (hello world)
+```bash
+$docker run hello-world
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pull complete 
+Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+2. ubuntu 컨테이너 실행 (ls, echo)
+```bash
+$docker run -it --name pass ubuntu bash
+
+$root@5eaff8e5795c:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+$root@5eaff8e5795c:/# echo hi>app
+$root@5eaff8e5795c:/# ls  
+app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+$root@5eaff8e5795c:/# cat app
+hi
+```
+3. attach & exec
+백그라운드 컨테이너 실행 후 stat 확인
+```bash
+#1. attach 백그라운드 컨테이너 실행 후 stat 확인
+$docker run -dit --name attach ubuntu
+
+$docker attach attach
+
+$root@6d07906df23e:/# exit
+exit
+
+$docker ps -a
+CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS                      PORTS     NAMES
+6d07906df23e   ubuntu        "/bin/bash"   30 seconds ago   Exited (0) 3 seconds ago              attach
+```
+```bash
+#2. exec 백그라운드 컨테이너 실행 후 stat 확인
+$docker run -dit --name exec ubuntu
+
+$dave1392857@c3r3s7 practice % docker exec -it exec bash
+
+$root@7091eb03dbae:/#exit
+exit
+
+$docker ps -a
+CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS                      PORTS     NAMES
+7091eb03dbae   ubuntu        "/bin/bash"   2 minutes ago    Up 2 minutes                          exec
+```
+- ==> attach 는 container PID 1(메인 프로세스)에 직접 연결
+
+"exit = PID 1 종료" 
+
+- ==> exec 는 container PID 2(bash)로 따로 연결 --- PID 1(메인 프로세스) 실행 중
+
+"exit = bash 종료 / PID 1 실행"
+
+
+- PID 1 접속 후 up 유지하기
+```bash
+#attach 접속 exit 하면서  up 상태 유지하기 
+#1.단축키 (ctrl p + q)
+$docker run -dit --name attach2 ubuntu
+4df71753e9cd1502b8119f5c244b04d8812432c25ba144f72ad3d9c5ba89ef91
+
+$docker attach --detach-keys="ctrl-d" attach2
+#attach 후 변경 단축키(ctrl+d)
+
+$ root@4df71753e9cd:/# read escape sequence
+
+$docker ps -a
+CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS                            PORTS     NAMES
+4df71753e9cd   ubuntu        "/bin/bash"   23 seconds ago   Up 22 seconds                               attach2
+```

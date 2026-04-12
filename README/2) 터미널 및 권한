@@ -1,0 +1,144 @@
+## 4) 터미널 조작 로그
+ - 1. 현재 위치 확인 : pwd
+ ```bash
+ $ pwd
+/Users/dave1392857/practice/1st-submission
+```
+
+ - 2. 목록 확인: ls(파일만) ls -l(파일 권한) ls -la(숨김 파일)
+```bash
+$ ls
+
+1st-submission  README.md
+```
+```bash
+$ ls -l
+
+total 8
+drwxr-xr-x  5 dave1392857  dave1392857   160 Apr 10 19:30 1st-submission
+-rw-r--r--  1 dave1392857  dave1392857  4013 Apr  9 21:45 README.md
+```
+```bash
+$ls -la
+
+otal 8
+drwxr-xr-x   5 dave1392857  dave1392857   160 Apr 10 19:31 .
+drwxr--r--   5 dave1392857  dave1392857   160 Apr  9 21:41 ..
+drwxr-xr-x  14 dave1392857  dave1392857   448 Apr  9 21:50 .git
+drwxr-xr-x   5 dave1392857  dave1392857   160 Apr 10 19:30 1st-submission
+-rw-r--r--   1 dave1392857  dave1392857  4013 Apr  9 21:45 README.md
+```
+
+ - 3. 이동: mv 파일명.txt 새경로/파일.txt.    , (상위로 이동) mv 파일명.txt ../파일명.txt
+ ```bash
+#하위 폴더로 이동
+$ 1% ls   
+2       a
+
+$ mv a 2/a
+
+$ 1% ls
+2
+ ```
+ ```bash
+ #상위 폴더로 이동
+$ 2 % ls
+3       a
+
+$ 2 % mv a ../a
+
+$ 1 % ls
+2       a
+```
+
+
+ - 4. 이름변경: mv 옛이름.txt 새이름.txt
+ ```bash
+# a => b
+2       a
+
+$ 1 % mv a b
+
+$ 1% ls
+2       b
+ ```
+
+ - 5. 폴더 생성: mkdir 폴더명   / (상위-하위) mkdir -p 이름1/이름2 .. 
+
+ ```bash
+ $ mkdir -p 1/2/3
+dave1392857@c3r3s7 practice % ls
+1               1st-submission
+```
+```bash
+$ mkdir a
+dave1392857@c3r3s7 1 % ls
+2       a
+```
+ - 6. 파일 생성: touch 파일명.txt / (내용 담아서) echo 내용 > 파일명.txt
+ ```bash
+ #빈 파일
+$ 1 % touch c
+$ 1 % cat c
+ ```
+ ```bash
+$ 1 % echo hi >d
+$ 1 % cat d
+hi
+ ```
+ - 7. 삭제: (파일 삭제) rm 파일명.txt.  /  (폴더 삭제) rm -r 이름 ,   (하위도 같이 삭제) rm -r e
+```bash
+#파일 삭제
+$ 1 % ls
+2       b       c
+
+$ 1 % rm c
+
+$ 1 % ls
+2       b
+```
+```bash
+#폴더 삭제
+$ 1 % ls
+2       b
+
+$ 1 % rm -r b
+
+$ 1 % ls
+2
+```
+
+ - 8. 복사: cp 파일명.txt 복사파일명.txt
+ ```bash
+$ 1 % echo hi > a
+
+$ 1 % cp a 2/b
+ 
+$ 2 % ls
+3       b
+
+$ 2 % cat b
+hi
+ ```
+
+## 5) 권한 실습
+- 권한 실습: r(read)/ w(write) / x(excute)
+```bash
+#권한 표기 확인
+$ls -l 
+$stat '파일명'
+
+$stat b
+16777220 1945074 -rw-r--r-- 1 dave1392857 dave1392857 0 3 "Apr 10 20:29:21 2026" "Apr 10 20:29:20 2026" "Apr 10 20:29:20 2026" "Apr 10 20:29:20 2026" 4096 8 0 b
+
+$stat -f "%Sp %p" b
+-rw-r--r-- 100644  
+#100= 일반파일 / 040=폴더
+```
+```bash
+#권한 변경
+$ chmod 744 b
+
+$ stat -f "%Sp %p" b
+-rwxr--r-- 100744
+```

@@ -1,0 +1,65 @@
+## 6) Docker 운영/검증 로그
+1. 설치 및 점검 결과
+```bash
+$docker --version
+Docker version 28.5.2, build ecc6942
+
+$docker info
+Client:
+ Version:    28.5.2
+ Context:    orbstack
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.29.1
+    Path:     /Users/dave1392857/.docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.40.3
+    Path:     /Users/dave1392857/.docker/cli-plugins/docker-compose
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 0
+```
+2. 기본 운영 명령 수행
+```bash
+#1. docker 컨테이너 실행 전
+$docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+$docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+$docker logs
+docker: 'docker logs' requires 1 argument
+$docker stats
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS 
+```
+
+```bash
+#2. docker 컨테이너 실행 후
+$docker run -dit --name container ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+689b91d88a0f: Pull complete 
+Digest: sha256:84e77dee7d1bc93fb029a45e3c6cb9d8aa4831ccfcc7103d36e876938d28895b
+Status: Downloaded newer image for ubuntu:latest
+root@6d6bda9b72d8:/#  
+
+$docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS         PORTS     NAMES
+f26f462c8aec   ubuntu    "/bin/bash"   4 seconds ago   Up 4 seconds             container
+
+$docker ps a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES
+f26f462c8aec   ubuntu    "/bin/bash"   48 seconds ago   Up 47 seconds             container
+
+$docker logs container
+
+$docker stats
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O         BLOCK I/O     PIDS 
+f26f462c8aec   container   0.00%     856KiB / 15.67GiB   0.01%     1.26kB / 126B   3.67MB / 0B   1 
+```

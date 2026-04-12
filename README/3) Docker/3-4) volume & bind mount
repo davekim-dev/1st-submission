@@ -1,0 +1,93 @@
+## 9) 볼륨 영속성 예시
+
+
+ 1. volume 생성
+ - docker 내부에 내용을 저장하는 것
+```bash
+$docker volume create mydata
+mydata
+
+$docker volume ls
+DRIVER    VOLUME NAME
+local     mydata
+```
+
+2. volume 연결 확인
+-컨테이너를 바꿔도 docker 내부의 저장된 내용은 바뀌지 않음
+
+```bash
+#container 에 내용 저장
+
+$docker run -dit --name container -v mydata:/app ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+689b91d88a0f: Pull complete 
+Digest: sha256:84e77dee7d1bc93fb029a45e3c6cb9d8aa4831ccfcc7103d36e876938d28895b
+Status: Downloaded newer image for ubuntu:latest
+99e41a8245d69e2b41ec05692c3c4a9a3bceb4f805cae3beb6fda4823f0629af
+
+$root@99e41a8245d6:/# cd /app
+$root@99e41a8245d6:/app# echo hi>a.txt
+$root@99e41a8245d6:/app# ls
+a.txt
+$root@99e41a8245d6:/app# cat a.txt
+hi
+
+
+#container2에 내용 확인(볼륨 영속성)
+
+$docker run -dit --name container2 -v mydata:/app ubuntu bash
+2d166de71daf06106094f98824c4191dc18abf72e0ef86f6b459d9466c782f29
+
+$docker exec -it container2 bash
+
+$root@2d166de71daf:/# cd /app
+$root@2d166de71daf:/app# ls
+a.txt
+$root@2d166de71daf:/app# cat a.txt
+hi
+```
+
+- 바인드 마운트
+```bash
+#바인드 마운트 생성 (container:bind_test)
+$docker run -dit --name bind_test -v/Users/dave1392857/1st-submission/docs:/app ubuntu
+a6b7de07b61d77b800bc895a5852210a11f1a6c64a37b6aeb5c6a69bde266c17
+
+#docker 내 파일 생성
+$docker exec -it bind_test bash
+
+$root@a6b7de07b61d:/# cd /app
+$root@a6b7de07b61d:/app# ls  
+github.png  image.png
+
+$root@a6b7de07b61d:/app# echo hi>bind 
+
+$root@a6b7de07b61d:/app# ls
+bind  github.png  image.png
+
+$root@a6b7de07b61d:/app# exit
+
+#localhost 에서 파일 확인
+$ls
+bind            github.png      image.png
+
+#새로운 컨테이너에서 확인(container:bind_test2)
+$docker run -dit --name bind_test2 -v/Users/dave1392857/1st-submission/docs:/app ubuntu
+ac2d2789e7d8a1a3fa69c1c4d62d70ec52127534dfa1ef3cbbf4e2d0694939a4
+
+$root@ac2d2789e7d8:/# cd /app
+$root@ac2d2789e7d8:/app# cat bind
+hi
+
+#localhost에서 파일 변경
+$echo hello>bind
+$cat bind
+hello
+
+$docker exec -it bind_test2 bash
+
+$root@ac2d2789e7d8:/# cd /app
+$root@ac2d2789e7d8:/app# cat bind
+hello
+```
