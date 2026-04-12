@@ -1,17 +1,19 @@
 # 1st-submission
 
  ## 1) 프로젝트 개요 (미션 요약)
-이 미션의 최종 결과물은 GitHub 공개 저장소 하나로 모든 산출물을 확인할 수 있는 개발 워크스테이션 구축 결과물입니다. 
-저장소에는 프로젝트 개요, 실행 환경, 수행 항목 체크리스트, 검증 방법, 트러블슈팅 2건 이상을 포함한 README.md 기술 문서를 작성합니다. 
-터미널에서 수행한 핵심 명령과 출력 결과, Docker 설치·운영·검증 로그도 문서에 함께 기록합니다. Dockerfile 기반 웹 서버 컨테이너를 구성하고, 빌드·실행 결과 및 포트 매핑을 통한 브라우저 접속 화면(주소창 포함)을 첨부합니다. 
-바인드 마운트를 통한 호스트 변경 전/후 비교, Docker 볼륨을 통한 컨테이너 삭제 전/후 데이터 영속성 검증 결과도 포함합니다. 
-마지막으로 Git 사용자 정보 설정과 VSCode에서의 GitHub 로그인 및 저장소 연동 완료 증거를 함께 제출합니다.
+GitHub 공개 저장소 하나로 모든 산출물을 확인할 수 있는 개발 워크스테이션 구축 결과물
+저장소에는 프로젝트 개요, 실행 환경, 수행 항목 체크리스트, 검증 방법, 트러블슈팅 2건 이상을 포함한 README.md 기술 문서를 작성
+터미널에서 수행한 핵심 명령과 출력 결과, Docker 설치·운영·검증 로그도 문서에 함께 기록
+Dockerfile 기반 웹 서버 컨테이너를 구성하고, 빌드·실행 결과 및 포트 매핑을 통한 브라우저 접속 화면
+바인드 마운트를 통한 호스트 변경 전/후 비교, Docker 볼륨을 통한 컨테이너 삭제 전/후 데이터 영속성 검증 결과도 포함 
+Git 사용자 정보 설정과 VSCode에서의 GitHub 로그인 및 저장소 연동 완료
 
  ## 2) 실행 환경
-- OS: 
+- OS:
 ```bash
-$ uname -a
-Darwin c3r3s7.codyssey.kr 24.6.0 Darwin Kernel Version 24.6.0: Mon Jan 19 22:00:10 PST 2026; root:xnu-11417.140.69.708.3~1/RELEASE_X86_64 x86_64
+$sw_vers
+ProductName:            macOS
+ProductVersion:         15.7.4
 ```
 
 - Shell:
@@ -30,14 +32,6 @@ $ git --version
 git version 2.53.0
 ```
 
-- Terminal:
-```bash
-$ printenv
- MallocNanoZone=0
-USER=dave1392857
-COMMAND_MODE=unix2003
-__CFBundleIdentifier=com.microsoft.VSCode
-```
 - 
 
 
@@ -84,41 +78,7 @@ drwxr-xr-x   5 dave1392857  dave1392857   160 Apr 10 19:30 1st-submission
 -rw-r--r--   1 dave1392857  dave1392857  4013 Apr  9 21:45 README.md
 ```
 
- 3. 이동: mv 파일명.txt 새경로/파일.txt.    , (상위로 이동) mv 파일명.txt ../파일명.txt
- ```bash
-#하위 폴더로 이동
-$ 1% ls   
-2       a
-
-$ mv a 2/a
-
-$ 1% ls
-2
- ```
- ```bash
- #상위 폴더로 이동
-$ 2 % ls
-3       a
-
-$ 2 % mv a ../a
-
-$ 1 % ls
-2       a
-```
-
-
- 4. 이름변경: mv 옛이름.txt 새이름.txt
- ```bash
-# a => b
-2       a
-
-$ 1 % mv a b
-
-$ 1% ls
-2       b
- ```
-
- 5. 폴더 생성: mkdir 폴더명   / (상위-하위) mkdir -p 이름1/이름2 .. 
+ 3. 폴더 생성: mkdir 폴더명   / (상위-하위) mkdir -p 이름1/이름2 .. 
 
  ```bash
  $ mkdir -p 1/2/3
@@ -130,6 +90,43 @@ $ mkdir a
 dave1392857@c3r3s7 1 % ls
 2       a
 ```
+
+
+
+ 4. 이동: mv 파일명.txt 새경로/파일.txt.    , (상위로 이동) mv 파일명.txt ../파일명.txt
+ ```bash
+#하위 폴더로 이동
+$ls #하위   
+2       a
+
+$ mv a 2/a
+
+$ls #상위
+2
+ ```
+ ```bash
+ #상위 폴더로 이동
+$ls #하위
+3       a
+
+$mv a ../a
+
+$ls #상위
+2       a
+```
+
+
+ 5. 이름변경: mv 옛이름.txt 새이름.txt
+ ```bash
+# a => b
+2       a
+
+$ 1 % mv a b
+
+$ 1% ls
+2       b
+ ```
+
  6. 파일 생성: touch 파일명.txt / (내용 담아서) echo 내용 > 파일명.txt
  ```bash
  #빈 파일
@@ -141,25 +138,26 @@ $ 1 % echo hi >d
 $ 1 % cat d
 hi
  ```
+
  7. 삭제: (파일 삭제) rm 파일명.txt.  /  (폴더 삭제) rm -r 이름 ,   (하위도 같이 삭제) rm -r e
 ```bash
 #파일 삭제
-$ 1 % ls
+$ls
 2       b       c
 
-$ 1 % rm c
+$rm c
 
-$ 1 % ls
+$ls
 2       b
 ```
 ```bash
 #폴더 삭제
-$ 1 % ls
+$ls
 2       b
 
-$ 1 % rm -r b
+$rm -r b
 
-$ 1 % ls
+$ls
 2
 ```
 
@@ -185,6 +183,7 @@ $stat '파일명'
 
 $stat b
 16777220 1945074 -rw-r--r-- 1 dave1392857 dave1392857 0 3 "Apr 10 20:29:21 2026" "Apr 10 20:29:20 2026" "Apr 10 20:29:20 2026" "Apr 10 20:29:20 2026" 4096 8 0 b
+#디스크id #파일 고유번호
 
 $stat -f "%Sp %p" b
 -rw-r--r-- 100644  
@@ -196,7 +195,22 @@ $ chmod 744 b
 
 $ stat -f "%Sp %p" b
 -rwxr--r-- 100744
+#user group other 순
 ```
+- | 권한 조합 | 계산    | 숫자 |
+r:4 , w:2 , x:1   
+
+| rwx   | 4+2+1 | 7  |
+
+| rw-   | 4+2   | 6  |
+
+| r-x   | 4+1   | 5  |
+
+| r--   | 4     | 4  |
+
+| ---   | 0     | 0  |
+
+
 
 ## 6) Docker 운영/검증 로그
 1. 설치 및 점검 결과
@@ -247,23 +261,37 @@ latest: Pulling from library/ubuntu
 689b91d88a0f: Pull complete 
 Digest: sha256:84e77dee7d1bc93fb029a45e3c6cb9d8aa4831ccfcc7103d36e876938d28895b
 Status: Downloaded newer image for ubuntu:latest
-root@6d6bda9b72d8:/#  
+$root@6d6bda9b72d8:/#  
 
 $docker ps -a
 CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS         PORTS     NAMES
 f26f462c8aec   ubuntu    "/bin/bash"   4 seconds ago   Up 4 seconds             container
 
-$docker ps a
+$docker ps 
 CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES
 f26f462c8aec   ubuntu    "/bin/bash"   48 seconds ago   Up 47 seconds             container
 
-$docker logs container
+$docker logs container 
+#출력값x : container 내부에 실행된 것이 없기 때문에.. 단순히 bash만 실행될 뿐
 
 $docker stats
 CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O         BLOCK I/O     PIDS 
 f26f462c8aec   container   0.00%     856KiB / 15.67GiB   0.01%     1.26kB / 126B   3.67MB / 0B   1 
 ```
 
+----
+```bash
+#container 삭제 명령어
+
+#중지
+$docker stop ' '  
+#삭제- EXIT
+$docker rm ' '
+#삭제- UP
+$docker rm -f ' '
+#전체 삭제
+$docker container prune
+```
 
 ## 7) 컨테이너 실행 실습
 
@@ -375,6 +403,41 @@ CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS              
 #2 nginx 설정 (내장되어 있는 내용을 변경 ex: port 설정)
 #3 dockerfile 설치
 
+$vim custom_image-nginx
+# 1. 베이스 이미지
+FROM nginx:alpine
+
+# 2. 기존 nginx 기본 설정 제거
+RUN rm /etc/nginx/conf.d/default.conf
+
+# 3. 커스텀 설정 파일 복사
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# 4. HTML 파일 복사
+COPY index.html /usr/share/nginx/html/index.html
+
+# 5. 포트 오픈
+EXPOSE 80
+
+# 6. nginx 실행
+CMD ["nginx", "-g", "daemon off;"]# 1. 베이스 이미지
+FROM nginx:alpine
+
+# 2. 기존 nginx 기본 설정 제거
+RUN rm /etc/nginx/conf.d/default.conf
+
+# 3. 커스텀 설정 파일 복사
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# 4. HTML 파일 복사
+COPY index.html /usr/share/nginx/html/index.html
+
+# 5. 포트 오픈
+EXPOSE 80
+
+# 6. nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
+#(nginx 를 실행하고 daemon off를 설정해라)
 $docker build -t custom_image-nginx:1.0 .
 
 [+] Building 7.8s (8/8) FINISHED                                                                                                                                                                                              docker:orbstack
@@ -417,6 +480,8 @@ $docker build -t custom_image-nginx:1.0 .
 $docker images custom_image-nginx
 REPOSITORY           TAG       IMAGE ID       CREATED          SIZE
 custom_image-nginx   1.0       03c7da6d4767   35 seconds ago   62.2MB
+
+
   ```
 
 ```bash
@@ -428,6 +493,26 @@ ada181189833b48cb2f18f0cf74950092f7b18371802136a8e83e1ee3d3d8ea9
 ```
 ![dockerfile image](./docs/image.png)
 
+
+```bash
+#이미지 삭제
+$docker rmi (repository):(TAG)
+$docker images
+REPOSITORY           TAG       IMAGE ID       CREATED       SIZE
+linux_base           1.0       c350b2f45443   7 hours ago   142MB
+custom_image-nginx   1.0       03c7da6d4767   8 hours ago   62.2MB
+nginx                latest    a716c9c12c38   5 days ago    161MB
+ubuntu               latest    b28307c40a80   9 days ago    78.1MB
+
+$docker rmi ubuntu:lates
+#단, image 관련 컨테이너가 멈춰있거나 삭제 되었을 때만!
+REPOSITORY           TAG       IMAGE ID       CREATED       SIZE
+linux_base           1.0       c350b2f45443   7 hours ago   142MB
+custom_image-nginx   1.0       03c7da6d4767   8 hours ago   62.2MB
+nginx                latest    a716c9c12c38   5 days ago    161MB
+
+
+```
 ---------------------------------
 
 
@@ -442,7 +527,7 @@ ada181189833b48cb2f18f0cf74950092f7b18371802136a8e83e1ee3d3d8ea9
 python 과 가장 어울리는 Linux
 ```
 ```bash
-#2(1). python 설치
+#2(1). python 패키지
 $cat > requirements.txt << 'EOF'
 flask==3.0.0
 gunicorn==21.2.0
@@ -453,7 +538,7 @@ flask==3.0.0
 gunicorn==21.2.0
 ```
 ```bash
-#2(2). app.py 설치
+#2(2). app.py 
 cat > app.py << 'EOF'
 from flask import Flask
 
@@ -478,8 +563,8 @@ if __name__ == '__main__':
 ```
 
 ```bash
-#3 dockerfile 설치
-$cat > Dockerfile << 'EOF'
+#3 dockerfile 생성
+$vim Dockerfile 
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -493,22 +578,7 @@ COPY . .
 EXPOSE 5000
 
 CMD ["python", "app.py"]
-EOF
 
-$cat dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 5000
-
-CMD ["python", "app.py"]
 ```
 
 ```bash
@@ -538,6 +608,7 @@ Hello, World!%
  1. volume 생성
  - docker 내부에 내용을 저장하는 것
 ```bash
+#volume 생성
 $docker volume create mydata
 mydata
 
@@ -651,8 +722,13 @@ CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS              
 # 실행 값 X >> 출력값 X
 $docker run -dit --name container ubuntu 
 $docker logs container
-
 #ubuntu bash 안에서 실행된 것이 없기 때문에 출력값이 없음
+
+$docker run -dit --name container2 ubuntu bash -c "echo hello"
+8cc741f9971f63cca4fbf0224bc878e233836d615b6ad388e
+$docker logs container2
+hello
+
 ```
 
 ```bash
