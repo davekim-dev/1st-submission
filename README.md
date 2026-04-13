@@ -1,12 +1,12 @@
 # 1st-submission
 
  ## 1) 프로젝트 개요 (미션 요약)
-GitHub 공개 저장소 하나로 모든 산출물을 확인할 수 있는 개발 워크스테이션 구축 결과물
-저장소에는 프로젝트 개요, 실행 환경, 수행 항목 체크리스트, 검증 방법, 트러블슈팅 2건 이상을 포함한 README.md 기술 문서를 작성
-터미널에서 수행한 핵심 명령과 출력 결과, Docker 설치·운영·검증 로그도 문서에 함께 기록
-Dockerfile 기반 웹 서버 컨테이너를 구성하고, 빌드·실행 결과 및 포트 매핑을 통한 브라우저 접속 화면
-바인드 마운트를 통한 호스트 변경 전/후 비교, Docker 볼륨을 통한 컨테이너 삭제 전/후 데이터 영속성 검증 결과도 포함 
-Git 사용자 정보 설정과 VSCode에서의 GitHub 로그인 및 저장소 연동 완료
+- GitHub 공개 저장소로 결과 확인할 수 있는 개발 워크스테이션 구축 결과물
+- 프로젝트 개요, 실행 환경, 수행 항목 체크리스트, 검증 방법, 트러블슈팅 2건 이상을 포함한 README.md 기술 문서를 작성
+- 터미널에서 수행한 핵심 명령과 출력 결과, Docker 설치·운영·검증 로그도 문서에 함께 기록
+- Dockerfile 기반 웹 서버 컨테이너를 구성하고, 빌드·실행 결과 및 포트 매핑을 통한 브라우저 접속 화면
+- 바인드 마운트를 통한 호스트 변경 전/후 비교, Docker 볼륨을 통한 컨테이너 삭제 전/후 데이터 영속성 검증
+- Git 사용자 정보 설정과 VSCode에서의 GitHub 로그인 및 저장소 연동 완료
 
  ## 2) 실행 환경
 - OS:
@@ -18,7 +18,7 @@ ProductVersion:         15.7.4
 
 - Shell:
 ```bash
-$ echo$SHELL
+$ echo $SHELL
 /bin/zsh
 ```
 - Docker: 
@@ -69,7 +69,7 @@ drwxr-xr-x  5 dave1392857  dave1392857   160 Apr 10 19:30 1st-submission
 ```
 ```bash
 $ls -la
-
+##
 otal 8
 drwxr-xr-x   5 dave1392857  dave1392857   160 Apr 10 19:31 .
 drwxr--r--   5 dave1392857  dave1392857   160 Apr  9 21:41 ..
@@ -121,9 +121,9 @@ $ls #상위
 # a => b
 2       a
 
-$ 1 % mv a b
+$mv a b
 
-$ 1% ls
+$ls
 2       b
  ```
 
@@ -156,7 +156,7 @@ $ls
 2       b
 
 $rm -r b
-
+#-r :recursive
 $ls
 2
 ```
@@ -198,7 +198,7 @@ $ stat -f "%Sp %p" b
 #user group other 순
 ```
 - | 권한 조합 | 계산    | 숫자 |
-r:4 , w:2 , x:1   
+r:4(2^2) , w:2(2^1) , x:1(2^0)   
 
 | rwx   | 4+2+1 | 7  |
 
@@ -401,7 +401,7 @@ CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS              
   ```bash
 #1 정적 파일 설정
 #2 nginx 설정 (내장되어 있는 내용을 변경 ex: port 설정)
-#3 dockerfile 설치
+#3 dockerfile 생성
 
 $vim custom_image-nginx
 # 1. 베이스 이미지
@@ -411,70 +411,36 @@ FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 
 # 3. 커스텀 설정 파일 복사
-COPY default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # 4. HTML 파일 복사
-COPY index.html /usr/share/nginx/html/index.html
-
-# 5. 포트 오픈
-EXPOSE 80
-
-# 6. nginx 실행
-CMD ["nginx", "-g", "daemon off;"]# 1. 베이스 이미지
-FROM nginx:alpine
-
-# 2. 기존 nginx 기본 설정 제거
-RUN rm /etc/nginx/conf.d/default.conf
-
-# 3. 커스텀 설정 파일 복사
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-# 4. HTML 파일 복사
-COPY index.html /usr/share/nginx/html/index.html
+COPY html/index.html /usr/share/nginx/html/index.html
 
 # 5. 포트 오픈
 EXPOSE 80
 
 # 6. nginx 실행
 CMD ["nginx", "-g", "daemon off;"]
-#(nginx 를 실행하고 daemon off를 설정해라)
-$docker build -t custom_image-nginx:1.0 .
+#(nginx 를 실행하고 daemon off를 설정해라) >> 백그라운드x
 
-[+] Building 7.8s (8/8) FINISHED                                                                                                                                                                                              docker:orbstack
- => [internal] load build definition from Dockerfile                                                                                                                                                                                     0.2s
- => => transferring dockerfile: 305B                                                                                                                                                                                                     0.0s
- => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                                                                                          2.7s
- => [internal] load .dockerignore                                                                                                                                                                                                        0.2s
- => => transferring context: 2B                                                                                                                                                                                                          0.0s
- => [1/3] FROM docker.io/library/nginx:alpine@sha256:582c496ccf79d8aa6f8203a79d32aaf7ffd8b13362c60a701a2f9ac64886c93d                                                                                                                    3.7s
- => => resolve docker.io/library/nginx:alpine@sha256:582c496ccf79d8aa6f8203a79d32aaf7ffd8b13362c60a701a2f9ac64886c93d                                                                                                                    0.2s
- => => sha256:582c496ccf79d8aa6f8203a79d32aaf7ffd8b13362c60a701a2f9ac64886c93d 10.33kB / 10.33kB                                                                                                                                         0.0s
- => => sha256:c1263cc56873d66f381fd07149aa0dc7244dd7c941334cd18473c46509f08465 2.50kB / 2.50kB                                                                                                                                           0.0s
- => => sha256:5bd7bd52e5bcab15a093466b90e37472b0d0c0081052522afb8924cbdaf15f56 12.32kB / 12.32kB                                                                                                                                         0.0s
- => => sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 3.86MB / 3.86MB                                                                                                                                           0.5s
- => => sha256:f03becc8ac15611cfcc421c977a5ba4d65456093570788523a4ba557689aa7f7 1.87MB / 1.87MB                                                                                                                                           0.9s
- => => sha256:15e759724ff67f262e38bb7c070af9d0b84f959f9b37fa966f68bf2f881a4b62 627B / 627B                                                                                                                                               0.8s
- => => extracting sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153                                                                                                                                                0.1s
- => => sha256:ff9f59a6a62e9e9f29d7a84fb18865b45664d3f0d061eff7548bd61746dd101c 957B / 957B                                                                                                                                               1.1s
- => => sha256:a71873b303e8d75170b7ced2725b01b3ae15ad76f0d4eef16a49335821b6a0ef 404B / 404B                                                                                                                                               1.3s
- => => extracting sha256:f03becc8ac15611cfcc421c977a5ba4d65456093570788523a4ba557689aa7f7                                                                                                                                                0.1s
- => => sha256:34dfdd2ef1f920d0054dde2fc09ddc83ff8e71d05fadb79e2cab6e6234596f0a 1.21kB / 1.21kB                                                                                                                                           1.4s
- => => extracting sha256:15e759724ff67f262e38bb7c070af9d0b84f959f9b37fa966f68bf2f881a4b62                                                                                                                                                0.0s
- => => extracting sha256:ff9f59a6a62e9e9f29d7a84fb18865b45664d3f0d061eff7548bd61746dd101c                                                                                                                                                0.0s
- => => sha256:c8a2fa3a88d244a3f32dcbc9c1f7649c662661a28c624198ada43aa0b7598e7f 1.40kB / 1.40kB                                                                                                                                           1.6s
- => => extracting sha256:a71873b303e8d75170b7ced2725b01b3ae15ad76f0d4eef16a49335821b6a0ef                                                                                                                                                0.0s
- => => sha256:1165b869c51a1a0747d78cec8fab96c30156a979e51ecf2f91aa792e557d94a4 20.25MB / 20.25MB                                                                                                                                         2.1s
- => => extracting sha256:34dfdd2ef1f920d0054dde2fc09ddc83ff8e71d05fadb79e2cab6e6234596f0a                                                                                                                                                0.0s
- => => extracting sha256:c8a2fa3a88d244a3f32dcbc9c1f7649c662661a28c624198ada43aa0b7598e7f                                                                                                                                                0.0s
- => => extracting sha256:1165b869c51a1a0747d78cec8fab96c30156a979e51ecf2f91aa792e557d94a4                                                                                                                                                0.4s
- => [internal] load build context                                                                                                                                                                                                        0.2s
- => => transferring context: 3.12kB                                                                                                                                                                                                      0.0s
- => [2/3] COPY nginx/default.conf /etc/nginx/conf.d/default.conf                                                                                                                                                                         0.2s
- => [3/3] COPY html/ /usr/share/nginx/html/                                                                                                                                                                                              0.2s
- => exporting to image                                                                                                                                                                                                                   0.3s
- => => exporting layers                                                                                                                                                                                                                  0.2s
- => => writing image sha256:03c7da6d47670aac01cb1428c2478d7e07cc2cea2fbec1d68d84cc22424b09a0                                                                                                                                             0.0s
- => => naming to docker.io/library/custom_image-nginx:1.0                                                                                                                                                                                0.0s
+$docker build -f custom_image-nginx -t test_image:1.0 .
+
+[+] Building 2.1s (9/9) FINISHED                                                                                                                                                                  docker:orbstack
+ => [internal] load build definition from custom_image-nginx                                                                                                                                                 0.1s
+ => => transferring dockerfile: 257B                                                                                                                                                                         0.0s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                                                              1.6s
+ => [internal] load .dockerignore                                                                                                                                                                            0.1s
+ => => transferring context: 2B                                                                                                                                                                              0.0s
+ => [1/4] FROM docker.io/library/nginx:alpine@sha256:582c496ccf79d8aa6f8203a79d32aaf7ffd8b13362c60a701a2f9ac64886c93d                                                                                        0.0s
+ => [internal] load build context                                                                                                                                                                            0.1s
+ => => transferring context: 3.21kB                                                                                                                                                                          0.0s
+ => CACHED [2/4] RUN rm /etc/nginx/conf.d/default.conf                                                                                                                                                       0.0s
+ => CACHED [3/4] COPY nginx/default.conf /etc/nginx/conf.d/default.conf                                                                                                                                      0.0s
+ => CACHED [4/4] COPY html/index.html /usr/share/nginx/html/index.html                                                                                                                                       0.0s
+ => exporting to image                                                                                                                                                                                       0.1s
+ => => exporting layers                                                                                                                                                                                      0.0s
+ => => writing image sha256:c16e9e9aca8a4ca5bb94697539029027017350d08cca63aa7e360d1d77eaa439                                                                                                                 0.0s
+ => => naming to docker.io/library/test_image:1.0     
 
 #설치된 파일 확인
 $docker images custom_image-nginx
@@ -511,7 +477,8 @@ linux_base           1.0       c350b2f45443   7 hours ago   142MB
 custom_image-nginx   1.0       03c7da6d4767   8 hours ago   62.2MB
 nginx                latest    a716c9c12c38   5 days ago    161MB
 
-
+#이미지 전체 삭제
+$docker image prune -a 
 ```
 ---------------------------------
 
